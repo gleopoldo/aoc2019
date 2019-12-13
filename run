@@ -1,0 +1,23 @@
+#!/bin/bash
+
+command_name=$1
+shift
+command_args=$@
+
+case $command_name in
+  setup)
+    docker build --build-arg uid=$EUID -t aoc:latest .
+  ;;
+
+  bash)
+    docker run --rm -it -v $PWD:/aoc aoc:latest /bin/bash
+  ;;
+
+  *)
+    echo "Whaaaaat !?"
+    echo "I don't like jokes. Only use these options:"
+    echo
+    echo "setup - setups your local environment"
+    echo "bash  - accesses container's bash"
+  ;;
+esac
